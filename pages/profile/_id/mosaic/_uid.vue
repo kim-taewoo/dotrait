@@ -1,19 +1,76 @@
 <template>
   <div>
-    <v-container>
-      <v-layout wrap>
-        <v-flex xs12>
-          <h2>Mosaic {{$route.params}}</h2>
-        </v-flex>
-        <v-flex xs12>
-          <svg class="canvas">
+    <v-layout wrap>
+      <v-flex xs12 class="text-xs-center mb-2">
+        <h3>지나온 날을 점 찍기</h3>
+      </v-flex>
+      <v-flex xs12 class="" >
+        <div id="capture" style="height:300px; width:300px;margin: 0 auto;">
+          <svg  class="canvas" ref="svg" ></svg>
 
-          </svg>
+        </div>
+      </v-flex>
+        <!-- <canvas id="canvas" width="300" height="300" v-show="false" ref="canvas"></canvas> -->
+        <div id="png-container"></div>
+    </v-layout>
+    <v-layout wrap class="mt-3">
+      <v-flex xs12>
+        <v-menu
+          transition="slide-x-transition"
+          top
+          right
+          max-width="238"
+        >
+          <v-btn
+            slot="activator"
+            :color="currentColor"
+            dark
+            depressed
+            :ripple="false"
+          >
+            현재 색
+          </v-btn>
+          <v-card>
+            <v-layout wrap>
+              <v-flex @click="changeColorKey(color)" class="xs6 align-center pa-1" style="display:flex; cursor:pointer;" v-for="(color, index) in colorKeys" :key="index">
+                <div style="width:30px;height:30px;border-radius:15px;" :style="{backgroundColor: colors[color].base}"></div>
+                <div class="pl-2">{{color}}</div>
+              </v-flex>
+            </v-layout>
+          </v-card>
+          
+        </v-menu>
 
-        <v-btn dark absolute  :right="true" fab color="pink"><v-icon>edit</v-icon></v-btn>
-        </v-flex>
-      </v-layout>
-    </v-container>
+      </v-flex>
+      <v-flex xs12 class="px-3">
+        <v-select
+          :items="colorOptions"
+          single-line
+          hide-details
+          v-model="selectedOption"
+          label="색감조절"
+        ></v-select>
+      </v-flex>
+      <v-flex xs12 class="px-3">
+        <v-slider
+          v-model="selectedLevel"
+          :tick-labels="ticksLabels"
+          :max="4"
+          step="1"
+          ticks="always"
+          tick-size="1"
+        ></v-slider>
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex class="pa-3">
+        <v-btn depressed block :class="'amber accent-1'" @click="saveImg">저장</v-btn>
+
+      </v-flex>
+      <v-flex ref="noShow" v-show="false">
+
+      </v-flex>
+    </v-layout>
   </div>
 
 </template>
@@ -21,10 +78,61 @@
 <script>
 import * as d3 from 'd3';
 import colors from 'vuetify/es5/util/colors'
+import html2canvas from 'html2canvas';
 export default {
+  data () {
+    return {
+      colors: null,
+      colorKeys: [],
+      selectedColorKey: 'blue',
+      colorOptions: [{text:'밝게',value:'lighten'},{text:'어둡게',value:'darken'},{text:'진하게', value:'accent'}],
+      selectedOption: '',
+      selectedLevel: 0,
+      ticksLabels: [
+        '기본', '1단계','2단계','3단계','4단계'
+      ]
+    }
+  },
+  computed: {
+    currentColor() {
+      if (this.selectedOption != '' && this.selectedLevel != 0) {
+        return this.colors[this.selectedColorKey][this.selectedOption+this.selectedLevel]
+      }
+      return this.colors[this.selectedColorKey].base
+    }
+  },
+  methods: {
+    changeColorKey (color) {
+      console.log(color)
+      this.selectedColorKey = color
+    },
+    
+    saveImg () {
+      var that = this
+      html2canvas(document.querySelector("#capture"), {
+        scale: 2
+      }).then(function(canvas) {
+        that.$refs.noShow.appendChild(canvas);
+        var download = function(){
+        var link = document.createElement('a');
+        link.download = 'filename2.png';
+        link.href = canvas.toDataURL()
+        link.click();
+      }()
+      });
+    }
+  },
+  created () {
+    this.colors = colors
+    for (var key in colors) {      
+      if (colors.hasOwnProperty(key)) {
+        this.colorKeys.push(key)
+      };
+    }
+  },
   mounted () {
     console.log(this.$route)
-    var width = 400, height = 400;
+    var width = 300, height = 300;
 
     var sqWidth = 20, sqHeight = 20;
 
@@ -41,7 +149,7 @@ export default {
 
     var svg = d3.select(".canvas").attr("height",height).attr("width",width);
     var rectGroup = svg.append("g");
-
+    var that = this
     var rect = rectGroup.selectAll("rect")
     .data(coordinateData)
     .enter()
@@ -60,7 +168,7 @@ export default {
     d3.select(this)
     .transition()
     .duration(150)
-    .style("fill",colors.blue.base);
+    .style("fill",that.currentColor);
     d3.select("text")
     })
 

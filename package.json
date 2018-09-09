@@ -13,8 +13,9 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "d3": "^5.7.0",
+    "html2canvas": "^1.0.0-alpha.12",
     "nuxt": "^1.0.0",
-    "vuetify": "^1.0.19"
+    "vuetify": "^1.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

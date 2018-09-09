@@ -52,8 +52,8 @@
               <v-divider></v-divider>
               <div class="py-2">
                 <v-subheader class="pl-1">연락처</v-subheader>
-                <div class="grey--text text--darken-2 px-3" style="height:30px; line-height:30px;" v-for="contact in contacts" :key="contact.icon">
-                  <i class="im mr-2" style="font-size: 18px;" :class="'im-' + contact.icon"></i> {{contact.value}}
+                <div class="grey--text text--darken-2 px-3" style="height:30px;display:flex;" v-for="contact in contacts" :key="contact.icon">
+                  <span class="d-block"><i class="im mr-2" style="font-size: 20px;" :class="'im-' + contact.icon"></i></span> <span>{{contact.value}}</span>
                 </div>
               </div>
             </v-card-text>
