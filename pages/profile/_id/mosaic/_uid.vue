@@ -2,7 +2,7 @@
   <div>
     <v-layout wrap>
       <v-flex xs12 class="text-xs-center mb-2">
-        <h3>지나온 날을 점 찍기</h3>
+        <h3>지나온 나날의 모자이크</h3>
       </v-flex>
       <v-flex xs12 class="" >
         <div id="capture" style="height:300px; width:300px;margin: 0 auto;">
@@ -32,9 +32,17 @@
           </v-btn>
           <v-card>
             <v-layout wrap>
-              <v-flex @click="changeColorKey(color)" class="xs6 align-center pa-1" style="display:flex; cursor:pointer;" v-for="(color, index) in colorKeys" :key="index">
+              <v-flex @click="changeColorKey(color)" class="xs6 align-center pa-1" style="display:flex; cursor:pointer;" v-if="color != 'shades'" v-for="(color, index) in colorKeys" :key="index">
                 <div style="width:30px;height:30px;border-radius:15px;" :style="{backgroundColor: colors[color].base}"></div>
-                <div class="pl-2">{{color}}</div>
+                <div class="pl-2 text-capitalize">{{color}}</div>
+              </v-flex>
+              <v-flex @click="changeColorKey('black')" class="xs6 align-center pa-1" style="display:flex; cursor:pointer;">
+                <div style="width:30px;height:30px;border-radius:15px;backgroundColor: black;"></div>
+                <div class="pl-2 text-capitalize">black</div>
+              </v-flex>
+              <v-flex @click="changeColorKey('white')" class="xs6 align-center pa-1" style="display:flex; cursor:pointer;">
+                <div style="width:30px;height:30px;border-radius:15px;backgroundColor: white;"></div>
+                <div class="pl-2 text-capitalize">white</div>
               </v-flex>
             </v-layout>
           </v-card>
@@ -59,6 +67,7 @@
           step="1"
           ticks="always"
           tick-size="1"
+          :disabled="!selectedOption"
         ></v-slider>
       </v-flex>
     </v-layout>
@@ -97,6 +106,8 @@ export default {
     currentColor() {
       if (this.selectedOption != '' && this.selectedLevel != 0) {
         return this.colors[this.selectedColorKey][this.selectedOption+this.selectedLevel]
+      } else if (this.selectedColorKey == 'white' || this.selectedColorKey == 'black') {
+        return this.colors['shades'][this.selectedColorKey]
       }
       return this.colors[this.selectedColorKey].base
     }
