@@ -28,7 +28,7 @@
     </v-navigation-drawer>
     <v-toolbar fixed app class="elevation-0" color="transparent">
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <!-- <v-toolbar-title class="ml-1">D<span class="red--text">O</span>TRAIT</v-toolbar-title> -->
+      <v-toolbar-title v-if="$route.name!='index'" class="ml-0">D<span class="red--text">O</span>TRAIT</v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- <v-toolbar-items class="hidden-xs-only">
         <v-btn 
@@ -55,16 +55,11 @@ export default {
   data() {
     return {
       drawer: false,
-      items: [
-        { icon: "apps", title: "Welcome", to: "/" },
-        { icon: "people", title: "NAV", to: "/navigation" },
-        { icon: "bubble_chart", title: "Inspire", to: "/inspire" }
-      ],
     };
   },
   methods: {
     onLogout () {
-      this.$router.push('/login')
+      this.$store.dispatch('logout')
     }
   },
   computed: {
@@ -87,8 +82,7 @@ export default {
       return menuItems
     },
     userIsAuthenticated () {
-      // return this.$store.getters.user !== null && this.$store.getters.user !== undefined
-      return true
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
     }
   }
 };
@@ -99,7 +93,7 @@ export default {
 
 html, body{
   height: 100%;
-  font-weight: 800;
+  /* font-weight: 800; */
 }
 
 body{

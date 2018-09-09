@@ -23,6 +23,7 @@ import * as d3 from 'd3';
 import colors from 'vuetify/es5/util/colors'
 export default {
   mounted () {
+    console.log(this.$route)
     var width = 400, height = 400;
 
     var sqWidth = 20, sqHeight = 20;
