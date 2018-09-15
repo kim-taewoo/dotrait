@@ -1,5 +1,5 @@
 <template>
-<div>
+<v-container class="pt-0" :class="{'pa-0' : $vuetify.breakpoint.xsOnly}">
   <mainLogo></mainLogo>
   <v-container>
     <form @submit.prevent="onSignin">
@@ -20,7 +20,7 @@
   </v-container>
 
   
-</div>
+</v-container>
 </template>
 
 <script>

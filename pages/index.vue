@@ -1,4 +1,5 @@
 <template>
+<v-container :class="{'pa-0' : $vuetify.breakpoint.xsOnly}">
 <v-layout wrap>
   <v-flex xs12>
     <mainLogo></mainLogo>
@@ -40,7 +41,7 @@
   <v-flex class="mt-4" xs12>
     <v-layout fill-height justify-center align-center>
       <v-flex class="text-xs-center">
-        <svg class ="button" @click="toProfile" expanded = "true" height = "70px" width = "70px">
+        <svg class ="button" @click="toNew" expanded = "true" height = "70px" width = "70px">
           <text text-anchor="middle" x="50%" y="57%" style="fill:gray;user-select:none;font-size:1.1em;">dot</text>
           <g>
             <circle  class = "innerCircle" cx = "50%" cy = "50%" r = "38%" fill = "none" stroke = "#000000" stroke-width = "8%">
@@ -60,11 +61,13 @@
   </v-flex>
 
 </v-layout>
+</v-container>
 </template>
 
 <script>
 import mainLogo from '@/components/mainLogo'
 export default {
+  layout: 'profile',
   components: {
     mainLogo
   },
@@ -82,13 +85,14 @@ export default {
     }
   },
   methods: {
-    toProfile () {
-      console.log(this.id)
-      if (this.id) {
-        this.$router.push({name: 'profile-id', params: {id: this.id}})
-      } else {
-        this.signupDialog = true
-      }
+    toNew () {
+      this.$router.push({name: 'new'})
+      // console.log(this.id)
+      // if (this.id) {
+      //   this.$router.push({name: 'profile-id', params: {id: this.id}})
+      // } else {
+      //   this.signupDialog = true
+      // }
     }
   },
   mounted () {

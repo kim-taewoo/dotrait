@@ -1,8 +1,10 @@
 <template>
   <div>
     <v-layout wrap>
-      <v-flex xs12 class="text-xs-center mb-2">
-        <h3>지나온 나날의 모자이크</h3>
+      <v-flex xs12 class="mb-2 ml-4">
+        <h3>점 찍기</h3>
+        <v-spacer></v-spacer>
+        <span>남은 점의 개수: {{points}}</span>
       </v-flex>
       <v-flex xs12 class="" >
         <div id="capture" style="height:300px; width:300px;margin: 0 auto;">
@@ -89,12 +91,27 @@ import * as d3 from 'd3';
 import colors from 'vuetify/es5/util/colors'
 import html2canvas from 'html2canvas';
 export default {
+  layout: 'profile',
   data () {
     return {
+      points: 50,
       colors: null,
       colorKeys: [],
       selectedColorKey: 'blue',
-      colorOptions: [{text:'밝게',value:'lighten'},{text:'어둡게',value:'darken'},{text:'진하게', value:'accent'}],
+      colorOptions: [
+        {
+          text:'밝게',
+          value:'lighten'
+        },
+        {
+          text:'어둡게',
+          value:'darken'
+        },
+        {
+          text:'진하게', 
+          value:'accent'
+        }
+      ],
       selectedOption: '',
       selectedLevel: 0,
       ticksLabels: [
@@ -110,6 +127,11 @@ export default {
         return this.colors['shades'][this.selectedColorKey]
       }
       return this.colors[this.selectedColorKey].base
+    }
+  },
+  watch: {
+    selectedColorKey () {
+      this.selectedLevel = 0
     }
   },
   methods: {
@@ -151,6 +173,8 @@ export default {
 
     var click = 0;
 
+    var zoom = d3.zoom();
+
     for (var i = 0; i <= width ; i += sqWidth) {
       for (var j = 0; j <= height; j += sqHeight) {
         var arr = [i,j];
@@ -158,7 +182,7 @@ export default {
       }
     }
 
-    var svg = d3.select(".canvas").attr("height",height).attr("width",width);
+    var svg = d3.select(".canvas").attr("height",height).attr("width",width)
     var rectGroup = svg.append("g");
     var that = this
     var rect = rectGroup.selectAll("rect")
@@ -168,6 +192,7 @@ export default {
     .style("fill","white")
     .style("stroke", "#F5F5F5")
     .attr("width",sqWidth)
+    // .attr("class", 'eachSquare')
     .attr("height",sqHeight)
     .attr("x", function(d,i) {
     return d[0];
@@ -176,11 +201,15 @@ export default {
     return d[1];
     })
     .on("click", function(){
-    d3.select(this)
-    .transition()
-    .duration(150)
-    .style("fill",that.currentColor);
-    d3.select("text")
+      if (that.points > 0) {
+        d3.select(this)
+        .transition()
+        .duration(150)
+        .style("fill",that.currentColor);
+        that.points--
+      } else {
+        alert('사용가능한 점이 없습니다.')
+      }
     })
 
     // var instructions = rectGroup.append("text")
