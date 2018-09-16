@@ -69,48 +69,47 @@
 
       <v-flex xs12 class="text-xs-center">
         <v-card>
-          <div class="svg-container"></div>
+          <div class="svg-container text-xs-center"></div>
         </v-card>
       </v-flex>  
 
       <v-flex xs12 class="mt-3">
-        <div class="subheading px-3">기록 타임라인</div>
+        <div class="subheading px-3">타임라인</div>
         <v-divider></v-divider>
       </v-flex>
       <v-flex xs12 class="mt-2">
-        <v-card class="mx-2 mb-2 mt-0">
-          <v-layout>
+          <v-layout wrap>
             <v-flex>
-              <v-card color="purple" class="white--text my-2" v-for="x in 5" :key="x">
-                <v-layout row>
-                  <v-flex xs7>
-                    <v-card-title primary-title>
-                      <div>
-                        <div class="headline">Halycon Days</div>
-                        <div>Ellie Goulding</div>
-                        <div>(2013)</div>
-                      </div>
-                    </v-card-title>
-                  </v-flex>
-                  <v-flex xs5>
-                    <v-img
-                      src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
-                      height="125px"
-                      contain
-                    ></v-img>
-                  </v-flex>
-                </v-layout>
-                <v-divider light></v-divider>
-                <v-card-actions class="py-1 px-3">
-                  Rate this album
-                  <v-spacer></v-spacer>
-                  <v-rating v-model="rating" color="white"></v-rating>
-                </v-card-actions>
-              </v-card>
-
+              <intersect @enter="entered($event, index)" @leave="left($event, index)" v-for="(i, index) in 9" :key="index">
+                <v-card color="purple" class="white--text ma-2 post" v-for="x in 8" :key="x">
+                  <v-layout row>
+                    <v-flex xs7>
+                      <v-card-title primary-title>
+                        <div>
+                          <div class="headline">Halycon Days</div>
+                          <div>Ellie Goulding</div>
+                          <div>(2013)</div>
+                        </div>
+                      </v-card-title>
+                    </v-flex>
+                    <v-flex xs5>
+                      <v-img
+                        src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
+                        height="125px"
+                        contain
+                      ></v-img>
+                    </v-flex>
+                  </v-layout>
+                  <v-divider light></v-divider>
+                  <v-card-actions class="py-1 px-3">
+                    Rate this album
+                    <v-spacer></v-spacer>
+                    <v-rating v-model="rating" color="white"></v-rating>
+                  </v-card-actions>
+                </v-card>
+              </intersect>
             </v-flex>
           </v-layout>
-        </v-card>
       </v-flex>
     </v-layout>
 </template>
@@ -118,7 +117,12 @@
 <script>
 import moment from 'moment'
 import * as d3 from 'd3'
+import intersect from "vue-intersect";
+
 export default {
+  components: {
+    intersect
+  },
   data () {
     return {
       show: false,
@@ -129,17 +133,24 @@ export default {
         { icon: 'instagram', value: 'Instagram' },
         { icon: 'github', value: 'Github' },
       ],
-      rating: 3
+      rating: 3,
+      selected: null
     }
   },
   methods: {
+    entered($event, target) {
+      $event[0].target.children[1].classList.add("appear");
+    },
+    left($event, target) {
+      $event[0].target.children[1].classList.remove("appear");
+    },
     calendarHeatmap() {
       // defaults
       var width = 340;
       var height = 140;
       var legendWidth = 150;
       var selector = '.svg-container';
-      var SQUARE_LENGTH = 16;
+      var SQUARE_LENGTH = 15.5;
       var SQUARE_PADDING = 2;
       var MONTH_LABEL_PADDING = 6;
       var now = moment().endOf('day').toDate();
@@ -265,7 +276,7 @@ export default {
             .attr('width', width)
             .attr('class', 'calendar-heatmap')
             .attr('height', height)
-            .style('padding', '18px');
+            .style('padding', '18px 0px 18px 18px');
 
           dayRects = svg.selectAll('.day-cell')
             .data(dateRange);  //  array of days for the last yr
@@ -447,5 +458,20 @@ export default {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   margin: 0 auto;
+}
+
+.main-content {
+  perspective: 1000px;
+  transform: translateY(70px) rotateX(30deg);
+  opacity: 0.4;
+  transition: all 1s;
+  /* padding: 25px; */
+}
+
+.appear {
+  opacity: 1;
+  transform: none;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 1px;
 }
 </style>

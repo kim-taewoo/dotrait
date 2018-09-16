@@ -173,7 +173,6 @@ export default {
 
     var click = 0;
 
-    var zoom = d3.zoom();
 
     for (var i = 0; i <= width ; i += sqWidth) {
       for (var j = 0; j <= height; j += sqHeight) {

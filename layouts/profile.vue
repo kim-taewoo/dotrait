@@ -28,7 +28,7 @@
     </v-navigation-drawer>
     <v-toolbar fixed app class="elevation-0" color="transparent">
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title v-if="$route.name!='index'" class="ml-0">D<span class="red--text">O</span>TRAIT</v-toolbar-title>
+      <v-toolbar-title v-if="$route.name!='index'" class="ml-0" style="user-select:none; cursor:pointer;" @click="$router.push('/')">D<span class="red--text">O</span>TRAIT</v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- <v-toolbar-items class="hidden-xs-only">
         <v-btn 
@@ -45,12 +45,13 @@
 
     <v-content>
         <nuxt />
-        <div style="height:56px;" v-if="$route.name != 'new'"></div>
+        <div style="height:56px;"></div>
+        <!-- <div style="height:56px;" v-if="$route.name != 'new'"></div> -->
         <v-bottom-nav
           :active.sync="bottomNav"
           :color="color"
           :value="true"
-          absolute
+          fixed
           shift
         >
           <v-btn exact dark nuxt to="/gallery">

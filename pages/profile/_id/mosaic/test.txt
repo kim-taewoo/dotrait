@@ -1,0 +1,24 @@
+[
+  [ 10,10 ],
+  [ 10,20 ],
+]
+
+내가 원하는 자료형
+
+[
+  {
+    color: '',
+    id: 1,
+    coordinates: [10, 20]
+  },
+  {
+    color: '',
+    id: 2,
+    coordinates: [10, 20]
+  },
+  {
+    color: '',
+    id: 3,
+    coordinates: [10, 20]
+  },
+]
