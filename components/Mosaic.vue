@@ -188,8 +188,8 @@ export default {
       .on("click", function(d){
           console.log(d)
           that.selectedDot = d
+        console.log('하이')
       })
-      
     }
   }  
     
