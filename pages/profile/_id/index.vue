@@ -32,6 +32,8 @@
 
 import Overview from '@/components/Overview'
 import Timeline from '@/components/Timeline'
+import Mosaic from '@/components/Mosaic'
+
 export default {
 
   layout: 'profile',
@@ -47,6 +49,10 @@ export default {
         {
           name: "Timeline",
           comp: Timeline
+        },
+        {
+          name: "Mosaic",
+          comp: Mosaic
         }
       ],
       

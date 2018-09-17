@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import colors from 'vuetify/es5/util/colors'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
 
 console.log(colors)
 Vue.use(Vuetify, {
@@ -15,3 +17,5 @@ Vue.use(Vuetify, {
     dumb: '#121212'
   }
 })
+
+Vue.use(VueAwesomeSwiper)

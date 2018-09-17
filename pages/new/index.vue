@@ -1,11 +1,161 @@
 <template>
   <div>
     <v-layout wrap>
-      <v-flex xs12 class="mb-2 ml-4">
-        <h3>점 찍기</h3>
-        <v-spacer></v-spacer>
-        <span>남은 점의 개수: {{points}}</span>
-      </v-flex>
+
+      <v-dialog v-model="introDialog" persistent max-width="320">
+        <v-card>
+          <v-card-title class="subheading">원하는 곳에 점을 찍어보세요</v-card-title>
+          <!-- <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text> -->
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" flat @click.native="introDialog = false">알겠어요!</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog fullscreen v-model="detailDialog" persistent>
+        <v-card>
+          <v-card-text class="px-0">
+
+        <v-container>
+          <v-layout wrap>
+            <v-flex>
+              <v-card-title class="pb-0 title text-xs-center justify-center font-weight-bold">
+               무엇을 했나요?
+              </v-card-title>
+            </v-flex>
+          </v-layout>
+          <v-layout wrap>
+              <v-flex xs12 sm6 class="px-2 text-xs-center">
+                <v-dialog
+                  ref="dialog"
+                  v-model="modal"
+                  :return-value.sync="date"
+                  persistent
+                  lazy
+                  full-width
+                  width="290px"
+                  
+                >
+                  <v-text-field
+                    slot="activator"
+                    v-model="date"
+                    label="Picker in dialog"
+                    prepend-icon="event"
+                    append-icon="arrow_drop_down"
+                    hide-details
+                    readonly
+                    single-line
+                  ></v-text-field>
+                  <v-date-picker v-model="date" locale="ko-kr"
+                  @change="$refs.dialog.save(date)">
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
+                    <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+                  </v-date-picker>
+                </v-dialog>
+              </v-flex>
+                <v-flex xs12 sm6 class="text-xs-center px-2">
+                <v-menu
+                  ref="menu_time1"
+                  :close-on-content-click="false"
+                  v-model="menu_time1"
+                  :nudge-right="40"
+                  :return-value.sync="time"
+                  lazy
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <v-text-field
+                    slot="activator"
+                    v-model="time"
+                    label="시작 시간"
+                    prepend-icon="access_time"
+                    append-icon="arrow_drop_down"
+                    hide-details
+                    readonly
+                    single-line
+                  ></v-text-field>
+                  <v-time-picker
+                    v-if="menu_time1"
+                    v-model="time"
+                    @change="$refs.menu_time1.save(time)"
+                    format="24hr"
+                  ></v-time-picker>
+                </v-menu>
+              </v-flex>
+            </v-layout>
+
+            <v-layout wrap class="mt-4">
+              <v-flex xs12 class="text-xs-center">
+                <v-card class="px-3 py-2">
+                  <v-card-text class="">
+                    <v-icon color="primary">location_on</v-icon> <span class="subheading font-weight-bold">어디에서</span> 
+                  </v-card-text>
+                  <swiper :options="swiperOption">
+                    <swiper-slide v-for="(where, index) in wheres" :key="index">
+                      <v-chip @click="selectedWhere = where" class="d-inline-block" :outline="where != selectedWhere" color="primary">{{where}}</v-chip>
+                    </swiper-slide>
+                   
+                  </swiper>
+                </v-card>
+              </v-flex>
+
+              <v-flex xs12 class="text-xs-center mt-3">
+                <v-card class="px-3 py-2">
+                  <v-card-text class="">
+                    <v-icon color="cyan">person</v-icon> <span class="font-weight-bold subheading">누구와</span> 
+                  </v-card-text>
+                  <swiper :options="swiperOption">
+                    <swiper-slide v-for="(who, index) in whos" :key="index">
+                      <v-chip @click="selectedWho = who" :outline="who != selectedWho" color="cyan">{{who}}</v-chip>
+                    </swiper-slide>
+                  </swiper>
+                </v-card>
+              </v-flex>
+
+              <v-flex xs12 class="text-xs-center mt-3">
+                <v-card class="px-3 py-2">
+                  <v-card-text class="">
+                    <v-icon color="blue-grey">help</v-icon> <span class="font-weight-bold subheading">무엇을</span> 
+                  </v-card-text>
+                  <swiper :options="swiperOption">
+                    <swiper-slide v-for="(what, index) in whats" :key="index">
+                      <v-chip @click="selectedWhat = what" :outline="what != selectedWhat" color="blue-grey">{{what}}</v-chip>
+                    </swiper-slide>
+                  </swiper>
+                </v-card>
+              </v-flex>
+            </v-layout>
+
+            <v-layout>
+              <v-flex class="xs">
+                <v-textarea
+                  name="more-des"
+                  label="설명 추가"
+                  value=""
+                  v-model="des"
+                  rows="2"
+                  hint="추가 내용을 기재해 주세요 (선택)"
+                ></v-textarea>
+              </v-flex>
+            </v-layout>
+
+
+          </v-container>
+          </v-card-text>
+         
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" flat @click.native="detailDialog = false">취소</v-btn>
+            <v-btn color="green darken-1" flat @click.native="addContent">완료</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <v-flex xs12 class="" >
         <div id="capture" style="height:300px; width:300px;margin: 0 auto;">
           <svg class="canvas" ref="svg" >
@@ -76,11 +226,12 @@
     </v-layout>
     <v-layout>
       <v-flex class="pa-3">
-        <v-btn depressed block :class="'amber accent-1'" @click="saveImg">저장</v-btn>
-        <v-btn @click="checkNode">테스트</v-btn>
+        <v-btn depressed block :class="'amber accent-1'" @click="saveImg">이미지로 다운받기</v-btn>
       </v-flex>
-      <v-flex ref="noShow" v-show="false">
-
+    </v-layout>
+    <v-layout>
+      <v-flex class="xs12">
+        {{selectedData}}
       </v-flex>
     </v-layout>
   </div>
@@ -95,8 +246,34 @@ export default {
   layout: 'profile',
   data () {
     return {
+      swiperOption: {
+        slidesPerView: 3,
+        centeredSlidese: true,
+        spaceBetween: 10,
+        freeMode: true,
+      },
+      wheres: [
+        '성균관대학교','집','도서관','영화관','놀이공원','대학로','이태원','카페','침대'
+      ],
+      whos: [
+        '혼자','대학친구','가족','연인','고등학교친구','강아지','고양이','학회원','동아리원','형제','부모님','엄마','아빠'
+      ],
+      whats: [
+        '공모전 수상','휴식','영화','휴식','데이트','쇼핑','운동','식사','개발'
+      ],
+      selectedWhere: null,
+      selectedWho: null,
+      selectedWhat: null,
+      des: '',
       coordinateData: [],
-      points: 50,
+      introDialog: true,
+      detailDialog: false,
+      modal:false,
+      date: new Date().toISOString(),
+      time: null,
+      menu_time1: false,
+      menu1: false,
+      points: 10000,
       colors: null,
       colorKeys: [],
       selectedColorKey: 'blue',
@@ -118,7 +295,8 @@ export default {
       selectedLevel: 0,
       ticksLabels: [
         '기본', '1단계','2단계','3단계','4단계'
-      ]
+      ],
+      selectedData: null
     }
   },
   
@@ -127,10 +305,30 @@ export default {
       this.selectedLevel = 0
     }
   },
+  
   methods: {
-    checkNode () {
-      console.log(this.coordinateData)
-    },  
+    addContent () {
+      var that = this
+      this.coordinateData.forEach(function(item, i) {
+        if (item.id = that.selectedData.id) {
+          that.coordinateData[i].details = {
+            where: JSON.parse(JSON.stringify(that.selectedWhere)),
+            who:JSON.parse(JSON.stringify(that.selectedWho)),
+            what:JSON.parse(JSON.stringify(that.selectedWhat)),
+            when: JSON.parse(JSON.stringify(that.date + '/' + that.time)),
+            des: JSON.parse(JSON.stringify(that.des)),
+          }
+        }
+      })
+      this.$store.commit('setMosaicData', this.coordinateData)
+      this.detailDialog = false
+      this.selectedWhere = null
+      this.selectedWho = null
+      this.selectedWhat = null
+      this.des = null,
+      this.date = new Date().toISOString().split('T')[0]
+      this.time = new Date().toTimeString().slice(0,5)
+    },
     changeColorKey (color) {
       console.log(color)
       this.selectedColorKey = color
@@ -158,6 +356,8 @@ export default {
         this.colorKeys.push(key)
       };
     }
+    this.date = new Date().toISOString().split('T')[0]
+    this.time = new Date().toTimeString().slice(0,5)
   },
   mounted () {
     console.log(this.$route)
@@ -174,7 +374,14 @@ export default {
           coordinates: [i,j],
           color: 'white',
           click: 0,
-          id: ''
+          id: i.toString() + j.toString(),
+          details: {
+            where: '',
+            who:'', 
+            what:'',
+            when: '',
+            des: ''
+          }
         }
         this.coordinateData.push(newData);
       }
@@ -218,22 +425,25 @@ export default {
       })
       .on("click", function(d){
         if (that.points > 0) {
-          console.log(this)
           d.click++
           if (d.click % 2 == 0) {
             d.color = 'white'
             that.points++
           } else {
+            console.log(d)
+            that.selectedData = d
             d.color = that.currentColor
             that.points--
+            that.detailDialog = true
           }
           // d3.select(this)
           // .transition()
           // .duration(150)
           // .style("fill",that.currentColor);
-        } else {
-          alert('사용가능한 점이 없습니다.')
         }
+        //  else {
+        //   alert('사용가능한 점이 없습니다.')
+        // }
       })
       
       // var svg = d3.select(".canvas").attr("height",height).attr("width",width)

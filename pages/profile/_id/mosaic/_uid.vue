@@ -94,7 +94,7 @@ export default {
   layout: 'profile',
   data () {
     return {
-      points: 50,
+      points: 5000,
       colors: null,
       colorKeys: [],
       selectedColorKey: 'blue',
