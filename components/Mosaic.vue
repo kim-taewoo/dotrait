@@ -33,12 +33,39 @@
         </v-card>
       </v-flex>
     </v-layout>
+
+    <v-layout class="pt-4 px-4" wrap>
+      <v-flex class="xs12">
+        SNS 공유하기
+        <v-divider></v-divider>
+      </v-flex>
+      <v-layout justify-start align-center class="mt-2">
+        <v-avatar style="cursor: pointer;" class="mx-1" v-for="(sns, i) in snss" :key="i">
+          <img
+          :src="sns.imgSrc"
+          alt="John"
+        >
+        </v-avatar>
+        
+
+      </v-layout>
+      <v-flex xs12 class="mt-2">
+        <v-divider></v-divider>
+      </v-flex>
+
+    </v-layout>
     
-    <v-layout>
-      <v-flex class="pa-3">
+    <v-layout wrap>
+      <v-flex class="px-3 pt-2">
         <v-btn depressed block :class="'amber accent-1'" @click="saveImg">이미지로 다운받기</v-btn>
       </v-flex>
     </v-layout>
+
+    <!-- <v-layout>
+      <v-flex class="xs12" ref="noShow" >
+
+      </v-flex>
+    </v-layout> -->
 
   </div>
 
@@ -48,12 +75,26 @@
 import * as d3 from 'd3';
 import colors from 'vuetify/es5/util/colors'
 import html2canvas from 'html2canvas';
+import facebook from '@/assets/sns/Facebook.png';
+import kakao from '@/assets/sns/Kakao.png';
+import twitter from '@/assets/sns/Twitter.png';
 export default {
   layout: 'profile',
   data () {
     return {
       selectedDot: null,
-      coordinateData: []
+      coordinateData: [],
+      snss: [
+        {
+          imgSrc: facebook
+        },
+        {
+          imgSrc: kakao
+        },
+        {
+          imgSrc: twitter
+        },
+      ]
     }
   },
   methods: {
@@ -64,7 +105,7 @@ export default {
       html2canvas(document.querySelector("#capture"), {
         scale: 2
       }).then(function(canvas) {
-        that.$refs.noShow.appendChild(canvas);
+        // that.$refs.noShow.appendChild(canvas);
         var download = function(){
         var link = document.createElement('a');
         link.download = 'filename2.png';

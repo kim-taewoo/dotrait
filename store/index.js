@@ -9,7 +9,8 @@ const createStore = () => {
       user: null,
       loading: false,
       error: null,
-      mosaicData: null
+      mosaicData: null,
+      timelineData: []
     },
     mutations: {
       setLoading (state, payload) {
@@ -26,7 +27,11 @@ const createStore = () => {
       },
       setMosaicData (state, payload) {
         state.mosaicData = payload
-      }
+      },
+      setTimelineData (state, payload) {
+        state.timelineData.push(payload)
+      },
+
 
       // setPosts(state, posts) {
       //   state.loadedPosts = posts
@@ -160,6 +165,9 @@ const createStore = () => {
       },
       mosaicData (state) {
         return state.mosaicData
+      },
+      timelineData (state) {
+        return state.timelineData
       }
       // loadedPosts(state) {
       //   return state.loadedPosts

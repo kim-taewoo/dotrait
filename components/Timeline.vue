@@ -16,31 +16,46 @@
 
       <v-flex xs12 class="mt-2">
         <v-layout wrap>
-          <v-flex>
-              <v-card color="primary" class="white--text ma-2 post" v-for="x in 8" :key="x">
-                <v-layout row>
-                  <v-flex xs7>
-                    <v-card-title primary-title>
-                      <div>
-                        <div class="headline">Halycon Days</div>
-                        <div>Ellie Goulding</div>
-                        <div>(2013)</div>
-                      </div>
-                    </v-card-title>
+          <v-flex xs12>
+              <v-card color="white" class=" ma-2 post" v-for="(x,i) in timelineData" :key="i">
+                <v-layout row wrap>
+                  <v-flex xs12 class="pa-2">
+                     <div class="font-weight-bold grey--text text--darken-3">{{computeTime(x.details.when)}}</div>
+                    <v-divider></v-divider>
                   </v-flex>
-                  <v-flex xs5>
+                  <v-flex class="pa-2">
+                    <span>
+                      <v-icon color="primary">location_on</v-icon>{{x.details.where}}
+                    </span>
+                    <span class="mx-2">
+                      <v-icon color="cyan">person</v-icon>{{x.details.who}}
+                    </span>
+                    <span class="mx-1">
+                      <v-icon color="blue-grey">help</v-icon>{{x.details.what}}
+                    </span>
+                  </v-flex>
+
+
+                  <v-flex xs12>
+                   
+                  </v-flex>
+                  <v-flex class="xs12">
+                    <p class="pa-4">{{x.details.des}}</p>
+
+                  </v-flex>
+                  <!-- <v-flex xs5>
                     <v-img
                       src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
                       height="125px"
                       contain
                     ></v-img>
-                  </v-flex>
+                  </v-flex> -->
                 </v-layout>
                 <v-divider light></v-divider>
                 <v-card-actions class="py-1 px-3">
-                  Rate this album
+                  이 기록 평가
                   <v-spacer></v-spacer>
-                  <v-rating v-model="rating" color="white"></v-rating>
+                  <v-rating v-model="rating" color="primary"></v-rating>
                 </v-card-actions>
               </v-card>
           </v-flex>
@@ -61,7 +76,20 @@ export default {
       selected: null
     }
   },
+  computed: {
+    timelineData () {
+      if(this.$store.getters.timelineData) {
+        return this.$store.getters.timelineData
+      } else {
+        return []
+      }
+    },
+  },
   methods: {
+    computeTime (val) {
+      let x = val.split('/')
+      return x[0] + ' ' + x[1]
+    },
     calendarHeatmap() {
       // defaults
       var width = 340;
@@ -349,7 +377,7 @@ export default {
     var now = moment().endOf('day').toDate();
     var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
     var chartData = d3.timeDays(yearAgo, now).map(function (dateElement) {
-      console.log(dateElement.getDay())
+      // console.log(dateElement.getDay())
       return {
         date: dateElement,
         count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6) ? Math.floor(Math.random() * 60) : Math.floor(Math.random() * 10)

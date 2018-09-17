@@ -1,6 +1,10 @@
 <template>
   <div>
     <v-layout wrap>
+      <v-flex xs12 class="mb-2 ml-4">
+        <v-spacer></v-spacer>
+        <span>남은 포인트: <span class="pink--text">{{points}}</span></span>
+      </v-flex>
 
       <v-dialog v-model="introDialog" persistent max-width="320">
         <v-card>
@@ -21,7 +25,7 @@
           <v-layout wrap>
             <v-flex>
               <v-card-title class="pb-0 title text-xs-center justify-center font-weight-bold">
-               무엇을 했나요?
+               어떤 내용을 점 찍을까요?
               </v-card-title>
             </v-flex>
           </v-layout>
@@ -166,7 +170,7 @@
         <!-- <canvas id="canvas" width="300" height="300" v-show="false" ref="canvas"></canvas> -->
         <div id="png-container"></div>
     </v-layout>
-    <v-layout wrap class="mt-3">
+    <v-layout wrap class="mt-3 px-3">
       <v-flex xs12>
         <v-menu
           transition="slide-x-transition"
@@ -224,14 +228,31 @@
         ></v-slider>
       </v-flex>
     </v-layout>
-    <v-layout>
-      <v-flex class="pa-3">
-        <v-btn depressed block :class="'amber accent-1'" @click="saveImg">이미지로 다운받기</v-btn>
-      </v-flex>
-    </v-layout>
-    <v-layout>
+    
+    <v-layout class="pt-4 px-4" wrap>
       <v-flex class="xs12">
-        {{selectedData}}
+        SNS 공유하기
+        <v-divider></v-divider>
+      </v-flex>
+      <v-layout justify-start align-center class="mt-2">
+        <v-avatar style="cursor: pointer;" class="mx-1" v-for="(sns, i) in snss" :key="i">
+          <img
+          :src="sns.imgSrc"
+          alt="John"
+        >
+        </v-avatar>
+        
+
+      </v-layout>
+      <v-flex xs12 class="mt-2">
+        <v-divider></v-divider>
+      </v-flex>
+
+    </v-layout>
+    
+    <v-layout wrap>
+      <v-flex class="px-3 pt-2">
+        <v-btn depressed block :class="'amber accent-1'" @click="saveImg">이미지로 다운받기</v-btn>
       </v-flex>
     </v-layout>
   </div>
@@ -242,6 +263,10 @@
 import * as d3 from 'd3';
 import colors from 'vuetify/es5/util/colors'
 import html2canvas from 'html2canvas';
+import facebook from '@/assets/sns/Facebook.png';
+import kakao from '@/assets/sns/Kakao.png';
+import twitter from '@/assets/sns/Twitter.png';
+
 export default {
   layout: 'profile',
   data () {
@@ -252,6 +277,17 @@ export default {
         spaceBetween: 10,
         freeMode: true,
       },
+      snss: [
+        {
+          imgSrc: facebook
+        },
+        {
+          imgSrc: kakao
+        },
+        {
+          imgSrc: twitter
+        },
+      ],
       wheres: [
         '성균관대학교','집','도서관','영화관','놀이공원','대학로','이태원','카페','침대'
       ],
@@ -321,6 +357,8 @@ export default {
         }
       })
       this.$store.commit('setMosaicData', this.coordinateData)
+      this.$store.commit('setTimelineData', this.selectedData)
+
       this.detailDialog = false
       this.selectedWhere = null
       this.selectedWho = null
