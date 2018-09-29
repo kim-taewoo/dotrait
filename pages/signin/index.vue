@@ -1,7 +1,7 @@
 <template>
-<v-container class="pt-0" :class="{'pa-0' : $vuetify.breakpoint.xsOnly}">
+<v-container class="pt-5 white" :class="{'pa-0' : $vuetify.breakpoint.xsOnly}">
   <mainLogo></mainLogo>
-  <v-container>
+  <v-container class="mt-5">
     <form @submit.prevent="onSignin">
       <v-layout wrap justify-center align-center>
         <v-flex xs12>
@@ -61,5 +61,6 @@ export default {
 </script>
 
 <style>
+
 
 </style>

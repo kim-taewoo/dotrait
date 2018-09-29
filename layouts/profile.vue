@@ -26,7 +26,7 @@
 
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed app class="elevation-0" color="transparent">
+    <v-toolbar fixed app class="elevation-0" color="white">
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title v-if="$route.name!='index'" class="ml-0" style="user-select:none; cursor:pointer;" @click="$router.push('/')">D<span class="red--text">O</span>TRAIT</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -55,7 +55,7 @@
           shift
         >
           <v-btn exact dark nuxt to="/gallery">
-            <span>갤러리</span>
+            <span>소셜피드</span>
             <v-icon>gradient</v-icon>
           </v-btn>
 
@@ -71,10 +71,10 @@
 
           <v-btn exact dark nuxt to="/notification">
             <span>알림</span>
-            <v-icon>notifications_active</v-icon>
+              <v-icon>notifications_active</v-icon>
           </v-btn>
 
-          <v-btn exact dark nuxt :to="{name: 'profile-id', params: {id:'id1'}}">
+          <v-btn dark nuxt :to="{name: 'profile-id-overview', params: {id:'id1'}}">
             <span>프로필</span>
             <v-icon>person</v-icon>
           </v-btn>
@@ -110,7 +110,7 @@ export default {
     menuItems () {
       let menuItems = [
         { icon: 'home', title: '홈으로', link: '/' },
-        { icon: 'gradient', title: '모두의 모자이크', link: '/meetup/new' },
+        { icon: 'gradient', title: '모두의 모자이크', link: '/gallery' },
         { icon: 'favorite_border', title: 'Dotrait 소개', link: '/about' },
         { icon: 'face', title: '회원가입', link: '/signup' },
         { icon: 'lock_open', title: '로그인', link: '/signin' }
@@ -118,8 +118,8 @@ export default {
       if (this.userIsAuthenticated) {
         menuItems = [
           { icon: 'home', title: '홈으로', link: '/' },
-          { icon: 'gradient', title: '모두의 모자이크', link: '/meetup/new' },
-          { icon: 'portrait', title: '프로필', link: '/profile' },
+          { icon: 'gradient', title: '모두의 모자이크', link: '/gallery' },
+          { icon: 'portrait', title: '프로필', link: '/profile/id1/overview' },
           { icon: 'favorite_border', title: 'Dotrait 소개', link: '/about' },
         ]
       }

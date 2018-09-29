@@ -2,11 +2,11 @@
 <v-container class="pt-0" :class="{'pa-0' : $vuetify.breakpoint.xsOnly}">
   <v-layout class="mx-3" wrap>
     <v-flex class="xs12">
-      <h3>이벤트</h3>
+      <h3>회원가입</h3>
     </v-flex>
     <v-card>
       <v-card-text>
-        서비스 차원에서 제공하는 각종 이벤트 제공 페이지로, 현재 개발중입니다.
+       회원가입 페이지로, 현재 개발중입니다.
       </v-card-text>
     </v-card>
   </v-layout>
@@ -15,6 +15,5 @@
 
 <script>
 export default {
-  layout: 'profile'
 }
 </script>

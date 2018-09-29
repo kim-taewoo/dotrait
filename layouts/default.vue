@@ -66,7 +66,7 @@ export default {
     menuItems () {
       let menuItems = [
         { icon: 'home', title: '홈으로', link: '/' },
-        { icon: 'gradient', title: '모두의 모자이크', link: '/meetup/new' },
+        { icon: 'gradient', title: '모두의 모자이크', link: '/gallery' },
         { icon: 'favorite_border', title: 'Dotrait 소개', link: '/about' },
         { icon: 'face', title: '회원가입', link: '/signup' },
         { icon: 'lock_open', title: '로그인', link: '/signin' }
@@ -74,7 +74,7 @@ export default {
       if (this.userIsAuthenticated) {
         menuItems = [
           { icon: 'home', title: '홈으로', link: '/' },
-          { icon: 'gradient', title: '모두의 모자이크', link: '/meetup/new' },
+          { icon: 'gradient', title: '모두의 모자이크', link: '/gallery' },
           { icon: 'portrait', title: '프로필', link: '/profile' },
           { icon: 'favorite_border', title: 'Dotrait 소개', link: '/about' },
         ]

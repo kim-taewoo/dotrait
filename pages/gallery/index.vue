@@ -2,7 +2,7 @@
 <v-container class="pt-0" :class="{'pa-0' : $vuetify.breakpoint.xsOnly}">
   <v-layout wrap class="pa-2">
     <v-flex class="xs12">
-      <h3 class="pl-2 subheading font-weight-bold">갤러리</h3>
+      <h3 class="pl-2 subheading font-weight-bold">소셜피드</h3>
       <v-divider></v-divider>
     </v-flex>
     <v-flex class="xs6 pa-1" v-for="(mosaic,i) in mosaics" :key=i>

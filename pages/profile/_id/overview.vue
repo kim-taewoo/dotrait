@@ -65,6 +65,9 @@
 
 <script>
 export default {
+  mounted () {
+    console.log('overview')
+  },
   data () {
     return {
       contacts: [

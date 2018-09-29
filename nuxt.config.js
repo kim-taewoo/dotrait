@@ -21,6 +21,7 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css' }
     ],
     script: [
+      { src: "https://apis.google.com/js/api.js", defer: true},
     ],
   },
 
@@ -33,7 +34,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    'vuetify/src/stylus/main.styl',
+    'vuetify/src/stylus/main.styl',"~assets/styles/main.css"
   ],
 
   /*
@@ -48,6 +49,11 @@ module.exports = {
   */
   modules: [
   ],
+
+  transition: {
+    name: "fade",
+    mode: "out-in"
+  },
 
   /*
   ** Build configuration
