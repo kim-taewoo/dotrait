@@ -12,3 +12,6 @@ dist
 
 # IDE
 .idea
+
+# Service Worker
+sw.*

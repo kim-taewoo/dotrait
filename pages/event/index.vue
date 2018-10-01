@@ -6,7 +6,7 @@
     </v-flex>
     <v-card>
       <v-card-text>
-        서비스 차원에서 제공하는 각종 이벤트 제공 페이지로, 현재 개발중입니다.
+        DOTRAIT 와 여러 기업에서 제공하는 각종 이벤트를 보여주는 페이지로, 현재 개발중입니다.
       </v-card-text>
     </v-card>
   </v-layout>

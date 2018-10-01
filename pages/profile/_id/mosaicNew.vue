@@ -54,7 +54,7 @@
           </v-card>
           
         </v-menu>
-        <v-btn @click="checkData">테스트</v-btn>
+        <!-- <v-btn @click="checkData">테스트</v-btn> -->
 
       </v-flex>
       <v-flex xs12 class="px-3">
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import * as d3 from 'd3';
+// import * as d3 from 'd3';
 import colors from 'vuetify/es5/util/colors'
 import html2canvas from 'html2canvas';
 import facebook from '@/assets/sns/Facebook.png';
@@ -842,7 +842,7 @@ export default {
       };
     }
   },
-  mounted () {
+  async mounted () {
     this.getInitialData()
 
     var that = this

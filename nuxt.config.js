@@ -18,10 +18,13 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' },
-      { rel: 'stylesheet', href: 'https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css' }
+      { rel: 'stylesheet', href: 'https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css' },
+      { rel: 'stylesheet', href: '//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css' },
     ],
     script: [
       { src: "https://apis.google.com/js/api.js", defer: true},
+      { src: "//d3js.org/d3.v3.min.js"},
+      { src: "//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js"},
     ],
   },
 
@@ -48,6 +51,7 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
+    ['@nuxtjs/pwa']
   ],
 
   transition: {

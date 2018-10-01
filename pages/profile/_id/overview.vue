@@ -12,10 +12,10 @@
             <p class="grey--text">프로그래머를 꿈꾸는 코더</p>
             <p class="text-xs-center">Enthusiastic coder who wants to be a real programmer. Majored in business, living in Seoul, South Korea</p>
             
-            <v-flex class="text-xs-center">
+            <!-- <v-flex class="text-xs-center">
               <v-btn small color="green" dark><v-icon left>email</v-icon> 메시지</v-btn>
               <v-btn small class="primary">팔로우</v-btn>
-            </v-flex>
+            </v-flex> -->
           </v-card-text>
         </v-card>
           <!-- <v-card-actions class="pb-1">
@@ -28,7 +28,7 @@
           <!-- <v-slide-y-transition> -->
           <v-card class="ma-2">
             <v-card-text class="pa-2" >
-              <div class="py-2">
+              <!-- <div class="py-2">
                 <v-subheader class="pl-1">보유 기술</v-subheader>
                 <div>
                   <v-chip label>웹 개발</v-chip>
@@ -37,7 +37,7 @@
                   <v-chip label>Javascript</v-chip>
                   <v-chip label>Python</v-chip>
                 </div>
-              </div>
+              </div> -->
               <v-divider></v-divider>
               <div class="py-2">
                 <v-subheader class="pl-1">목표, 관심분야</v-subheader>

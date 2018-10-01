@@ -2,32 +2,32 @@
 <v-container class="pt-0" :class="{'pa-0' : $vuetify.breakpoint.xsOnly}">
   <v-layout wrap class="pa-2">
     <v-flex class="xs12">
-      <h3 class="pl-2 subheading font-weight-bold">소셜피드</h3>
+      <h3 class="pl-2 subheading font-weight-bold">갤러리</h3>
       <v-divider></v-divider>
     </v-flex>
     <v-flex class="xs6 pa-1" v-for="(mosaic,i) in mosaics" :key=i>
       <v-card class="pa-2">
         <v-layout wrap justify-center align-center>
-          <v-flex xs12>
+          <!-- <v-flex xs12>
             <v-avatar :color="mosaic.avatarColor" size="28">
               <span class="white--text">{{mosaic.avatarLetter}}</span>
             </v-avatar>
            <span class="ml-2">{{mosaic.name}}</span>
-          </v-flex>
+          </v-flex> -->
           <v-flex xs12 class="text-xs-center mt-2">
             <v-divider></v-divider>
 
             <div class="example mt-1"  :style="{ 'background-image': 'url(' + mosaic.image + ')' }"></div>
           </v-flex>
 
-          <v-flex class="xs12 mt-2">
+          <!-- <v-flex class="xs12 mt-2">
             <v-divider></v-divider>
             <v-layout align-center class="mt-2">
               <v-flex class="xs6 text-xs-center"><v-icon color="primary">thumb_up</v-icon> {{mosaic.likes}}</v-flex>
               <v-divider vertical></v-divider>
               <v-flex xs6 class="text-xs-center"><v-icon>chat</v-icon> {{mosaic.comments}}</v-flex>
-            </v-layout>
-          </v-flex>
+            </v-layout> -->
+          <!-- </v-flex> -->
         </v-layout>
       </v-card>
 

@@ -55,7 +55,7 @@
           shift
         >
           <v-btn exact dark nuxt to="/gallery">
-            <span>소셜피드</span>
+            <span>갤러리</span>
             <v-icon>gradient</v-icon>
           </v-btn>
 

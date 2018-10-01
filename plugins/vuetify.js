@@ -4,7 +4,6 @@ import colors from 'vuetify/es5/util/colors'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 
-
 Vue.use(Vuetify, {
   theme: {
     primary: "#1976D2", // a color that is not in the material colors palette
