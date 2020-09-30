@@ -5,6 +5,13 @@
 - 프로토타입 주소: dottrait.firebaseapp.com/  (모바일 화면에 최적화되어 있습니다.)
 
 ## 캡쳐 이미지
+
+![](./static/readmeImgs/1.jpg)
+
+![](./static/readmeImgs/3.jpg)
+
+![](./static/readmeImgs/4.jpg)
+
 ## Build Setup
 
 ``` bash

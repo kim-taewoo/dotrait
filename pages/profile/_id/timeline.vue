@@ -23,7 +23,7 @@
 
           <v-flex class="xs6 text-xs-left mt-3">
             <v-menu
-              v-if="false"
+              v-if="true"
               transition="slide-x-transition"
               top
               right
